@@ -64,6 +64,10 @@ def index():
 def metric():
     return render_template('metric.html')
 
+@app.route('/help')
+def metric():
+    return render_template('help.html')
+
 @app.route('/wattson-data')
 def wattson_data():
     global energyData

@@ -1,0 +1,16 @@
+[Unit]
+Description=Upbeat Labs Energy Monitor
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+ExecStart=venv/bin/python app.py
+KillSignal=SIGINT
+WorkingDirectory=/home/pi/UpbeatLabs_EnergyMonitor
+StandardOutput=inherit
+StandardError=inherit
+Restart=always
+User=pi
+
+[Install]
+WantedBy=multi-user.target
