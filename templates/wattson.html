@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% block title %}Home - My Flask App{% endblock %}
+{% block content %}
+<div class="container">
+<div class="header">
+  <img src="{{ url_for('static', filename='logo.png') }}">
+  <h1>Dr. Wattson Energy Monitor</h1>
+</div>
+<h3 id="observationTime">Last observed:</h3>
+<div class = "row">
+<div class = "col-6 border rounded" >
+<div> 
+  <canvas id="currentChart" data-bs-toggle="modal" data-bs-target="#chartModal" data-metric-id="CurrentRMS"></canvas>
+</div>
+</div>
+<div class = "col-6 border rounded">    
+  <canvas id="voltageChart" data-bs-toggle="modal" data-bs-target="#chartModal" data-metric-id="VoltageRMS"></canvas>
+</div>
+</div>
+<div class = "row">
+<div class = "col-6 border rounded" >
+  <canvas id="lineFrequencyChart" data-bs-toggle="modal" data-bs-target="#chartModal" data-metric-id="LineFrequency"></canvas>
+</div>
+<div class = "col-6 border rounded">
+  <canvas id="powerFactorChart" data-bs-toggle="modal" data-bs-target="#chartModal" data-metric-id="PowerFactor"></canvas>
+</div>
+</div>
+<div class = "row" >
+<div class = "col col-sm-12 col-md-6 border rounded">
+  <canvas id="eventsChart"></canvas>
+</div>
+<div class = "col col-sm-12 col-md-6 border rounded">
+  <canvas id="powerQuadrantChart"></canvas> 
+</div>
+</div>
+<div class= "row text-center">
+<div class = "col-6 border rounded">
+  <canvas id="activePowerChart" data-bs-toggle="modal" data-bs-target="#chartModal" data-metric-id="ActivePower"></canvas>
+</div>
+<div class="col-6 border rounded d-flex justify-content-center">
+<div class = "col border rounded d-flex justify-content-center">
+<div class="align-self-center" data-bs-toggle="modal" data-bs-target="#chartModal" data-metric-id="ReactivePower">
+  <p class="p1" id="reactivePower">0 VAR</p>
+  <p class="p2">Reactive Power</p>
+  </div>
+</div>
+<div class = "col border rounded d-flex justify-content-center">
+<div class="align-self-center" data-bs-toggle="modal" data-bs-target="#chartModal" data-metric-id="ApparentPower">
+  <p class="p1" id="apparentPower">0 VA</p>      
+  <p class="p2">Apparent Power</p>
+</div>
+</div>
+</div>
+</div>
+
+<h3>Energy stats for today:</h3>
+<div class = "row text-center">
+<div class = "col-6 border rounded">
+  <h3>Import (Consumed)</h3>
+</div>
+<div class = "col-6 border rounded">
+  <h3>Export (Generated)</h3>
+</div>
+</div>
+<div class = "row text-center">
+<div class = "col-6 border rounded" data-bs-toggle="modal" data-bs-target="#chartModal" data-metric-id="ActiveEnergyImport">
+  <p class="p1" id="activeEnergyImport">0 Wh</p>
+  <p class="p2">Active Energy Import</p>
+</div>
+<div class = "col-6 border rounded" data-bs-toggle="modal" data-bs-target="#chartModal" data-metric-id="ActiveEnergyExport">
+  <p class="p1" id="activeEnergyExport">0 Wh</p>
+  <p class="p2">Active Energy Export</p>
+</div>
+</div>
+<div class = "row text-center">
+<div class = "col-6 border rounded" data-bs-toggle="modal" data-bs-target="#chartModal" data-metric-id="ReactiveEnergyImport">
+  <p class="p1" id="reactiveEnergyImport">0 VARh</p>
+  <p class="p2">Reactive Energy Import</p>
+</div>
+<div class = "col-6 border rounded" data-bs-toggle="modal" data-bs-target="#chartModal" data-metric-id="ReactiveEnergyExport">
+  <p class="p1" id="reactiveEnergyExport">0 VARh</p>
+  <p class="p2">Reactive Energy Export</p>
+</div>
+</div>
+<!-- Modal --> 
+
+<div class="modal fade" id="chartModal" tabindex="-1" aria-labelledby="chartModalLabel" aria-hidden="true">
+<div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal-content">
+<div class="modal-header">
+  <h5 class="modal-title" id="chartModalLabel">Metric Chart</h5>
+  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+</div>
+<div class="modal-body d-flex justify-content-center
+  align-items-center height-full"> 
+  <canvas id="myChart" width="400" height="400"></canvas>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+
+            
+<script type="module" src="{{ url_for('static',filename='script.js') }}"></script>  
+{% endblock %}

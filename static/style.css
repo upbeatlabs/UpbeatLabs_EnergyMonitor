@@ -1,0 +1,37 @@
+
+.height-full {
+  height: 80vh;
+}
+
+.container {
+  background-color: #fff;
+  #padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 80%;
+ }
+
+.header {
+  display: flex;
+  align-items: center;
+}
+
+.header img {
+  width: 100px;
+  height: 100px;
+  vertical-align: middle;
+}
+
+.header h1 {
+  margin-top: 0;
+  margin-bottom: 0;
+}
+
+ .p1 {
+   font-size: 30px;
+   font-weight: bold;
+  }
+
+  .p2 {
+   font-size: 16px;
+  }

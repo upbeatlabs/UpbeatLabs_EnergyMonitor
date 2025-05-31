@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Home - My Flask App{% endblock %}
+{% block content %}
+  <div class="container">
+    <div class="header">
+      <img src="{{ url_for('static', filename='logo.png') }}">
+      <h1>Dr. Wattson
+      Energy Monitor - Metrics Chart</h1>
+    </div>
+    <form id="myForm">
+    <input type="text" id="minVal" placeholder="">
+    <input type="text" id="maxVal" placeholder="">    
+    <button type="button" onclick="setMinMaxYaxis()">Rescale Y-Axis</button>
+    </form>    
+   <div class = "row">
+    <div class = "column height-full" >    
+      <canvas id="metricChart"></canvas>
+    </div>
+  </div>
+  </div>
+  <script src="{{ url_for('static',filename='metric.js') }}"></script>  
+{% endblock %}
+
+

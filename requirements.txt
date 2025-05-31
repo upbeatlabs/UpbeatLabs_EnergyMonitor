@@ -1,0 +1,8 @@
+Flask
+influxdb
+influxdb_client
+UpbeatLabs-MCP39F521
+adafruit_ssd1306
+digitalio
+PIL
+
