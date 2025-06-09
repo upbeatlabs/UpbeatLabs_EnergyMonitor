@@ -4,7 +4,7 @@ After=network-online.target
 Wants=network-online.target
 
 [Service]
-ExecStart=venv/bin/python app.py
+ExecStart=/home/pi/UpbeatLabs_EnergyMonitor/venv/bin/python app.py
 KillSignal=SIGINT
 WorkingDirectory=/home/pi/UpbeatLabs_EnergyMonitor
 StandardOutput=inherit
