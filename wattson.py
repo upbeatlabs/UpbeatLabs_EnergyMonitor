@@ -151,7 +151,7 @@ def create_device(device_id=None):
     # Return None on failure
     return None
 
-def query_all_data(device_id) -> {}:
+def query_all_data(device_id, duration, aggregateWindow) -> {}:
     influxdb_client = InfluxDBClient(url=config.get('APP', 'INFLUX_URL'),
                                      token=config.get('APP', 'INFLUX_TOKEN'),
                                      org=config.get('APP', 'INFLUX_ORG'))
@@ -161,9 +161,9 @@ def query_all_data(device_id) -> {}:
     device_filter = f'r.device == "{device_id}" and r._field != "token"'
 
     flux_query = f'from(bucket: "{config.get("APP", "INFLUX_BUCKET")}") ' \
-                 f'|> range(start: -5m ) ' \
+                 f'|> range(start: {duration} ) ' \
                  f'|> filter(fn: (r) => r._measurement == "wattson_measurement" and {device_filter})' \
-                 f'|> aggregateWindow(every: 10s, fn: mean) ' \
+                 f'|> aggregateWindow(every: {aggregateWindow}, fn: mean) ' \
                  f'|> map(fn: (r) => ( {{ r with _time: uint(v: r._time) }} ))' \
                  f'|> pivot(rowKey:["_time"], columnKey: ["_field"], valueColumn: "_value")'
 

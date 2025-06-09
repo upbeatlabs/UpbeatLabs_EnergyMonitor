@@ -5,13 +5,33 @@
     <div class="header">
       <img src="{{ url_for('static', filename='logo.png') }}">
       <h1>Dr. Wattson
-      Energy Monitor - Metrics Chart</h1>
+      Energy Monitor - Metrics Chart</h1>        
     </div>
+    <div class="clearfix float-end">
+      <span id="refreshInterval">Refreshing every 5s </span>
+      <div id="mySpinner" class="spinner-border text-primary float-end" role="status" style="display: none;">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>     
     <form id="myForm">
     <input type="text" id="minVal" placeholder="">
     <input type="text" id="maxVal" placeholder="">    
-    <button type="button" onclick="setMinMaxYaxis()">Rescale Y-Axis</button>
-    </form>    
+    <button type="button" onclick="setMinMaxYaxis()">Rescale Y-Axis</button>    
+    </form>
+    <br>
+    <form id="durationForm">
+      <select class="form-select" aria-label="Select data range" id="durationSelect">
+        <option value ='{"duration":"-5m","aggregateWindow":"10s"}' selected>Select data range</option>
+        <option value='{"duration":"-5m","aggregateWindow":"10s"}'>Last 5 minutes</option>
+        <option value='{"duration":"-15m","aggregateWindow":"10s"}'>Last 15 minutes</option>
+        <option value='{"duration":"-30m","aggregateWindow":"20s"}'>Last 30 minutes</option>
+        <option value='{"duration":"-1h","aggregateWindow":"20s"}'>Last 1 hour</option>
+        <option value='{"duration":"-3h","aggregateWindow":"30s"}'>Last 3 hours</option>
+        <option value='{"duration":"-6h","aggregateWindow":"1m"}'>Last 6 hours</option>
+        <option value='{"duration":"-12h","aggregateWindow":"2m"}'>Last 12 hours</option>
+        <option value='{"duration":"-24h","aggregateWindow":"2m"}'>Last 24 hours</option>
+      </select>
+    </form>            
    <div class = "row">
     <div class = "column height-full" >    
       <canvas id="metricChart"></canvas>

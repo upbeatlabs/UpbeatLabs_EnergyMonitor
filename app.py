@@ -104,22 +104,6 @@ def wattson_data():
     return response
     #return jsonify({'energyData': localEDJSON, 'energyAccumData': localEADJSON})
 
-@app.route('/chart-data')
-def chart_data():
-    # Generate random data for demonstration
-    data = [random.randint(10, 100) for _ in range(7)]
-    labels = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
-    return jsonify({
-        'labels': labels,
-        'datasets': [{
-            'label': 'Live Random Data',
-            'backgroundColor': 'rgba(54, 162, 235, 0.2)',
-            'borderColor': 'rgba(54, 162, 235, 1)',
-            'borderWidth': 1,
-            'data': data
-        }]
-    })
-
 @app.route('/query-data', methods=['GET'])
 def query_data():
     device_id = request.args.get('device_id', default='wattson01')
@@ -133,8 +117,13 @@ def query_data():
 @app.route('/query-all-data', methods=['GET'])
 def query_all_data():
     device_id = request.args.get('device_id', default='wattson01')
+    duration = request.args.get('duration', default='-5m')
+    aggregateWindow = request.args.get('aggregateWindow', default='10s')
+
+    print(f"query_all_data:: device_id: {device_id}, duration: {duration}, aggregateWindow: {aggregateWindow}")
+
     try:
-        result = wattson.query_all_data(device_id)
+        result = wattson.query_all_data(device_id, duration, aggregateWindow)
         return jsonify(result)
     except Exception as e:
         return jsonify({"error": str(e)}), 500    

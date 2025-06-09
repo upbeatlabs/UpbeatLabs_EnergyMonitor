@@ -1,28 +1,102 @@
 let metricChart;
 
-function fetchChartData() {
-    // const urlParams = new URLSearchParams(window.location.search);
-
-    // const metric = urlParams.get('metric') ?? 'CurrentRMS';
-    
-    fetch('/query-all-data')      
-        .then(response => response.json())
-        .then(data => {
-            if (!metricChart) {
-                // First time: create the chart
-                const ctx = document.getElementById('metricChart').getContext('2d');
-                metricChart = createChart(ctx, data);
-            } else {
-                // Update chart data
-                updateChart(metricChart, data);
-            }
-        });
+class PeriodicRunner {
+    constructor(fn, intervalMs) {
+      this.fn = fn;
+      this.intervalMs = intervalMs;
+      this.inProgress = false;
+      this.pending = false;
+      this.stopped = false;
+      this._timer = null;
+    }
+  
+    async _run() {
+      if (this.inProgress) {
+        this.pending = true; // Queue another run if called during execution
+        return;
+      }
+      this.inProgress = true;
+      try {
+        await this.fn();
+      } finally {
+        this.inProgress = false;
+        if (this.pending) {
+          this.pending = false;
+          // Run immediately if a call was requested while busy
+          this._run();
+        } else if (!this.stopped) {
+          // Schedule next periodic run
+          this._timer = setTimeout(() => this._run(), this.intervalMs);
+        }
+      }
+    }
+  
+    start() {
+      if (this.stopped) {
+        this.stopped = false;
+        this._run();
+      } else if (!this._timer) {
+        this._run();
+      }
+    }
+  
+    stop() {
+      this.stopped = true;
+      clearTimeout(this._timer);
+      this._timer = null;
+    }
+  
+    triggerNow() {
+      this.pending = true;
+      this._run();
+    }
+  
+    setIntervalMs(newIntervalMs) {
+      this.intervalMs = newIntervalMs;
+      // If running, restart the timer with the new interval
+      if (!this.stopped) {
+        clearTimeout(this._timer);
+        this._timer = null;
+        if (!this.inProgress) {
+          this._run();
+        }
+        // If inProgress, next schedule will use new interval
+      }
+    }
 }
 
-// Fetch data every 2 seconds
-setInterval(fetchChartData, 2000);
-// Initial fetch
-fetchChartData();
+async function fetchChartData(duration, aggregateWindow) {
+    const urlParams = new URLSearchParams({
+        duration: duration,
+        aggregateWindow: aggregateWindow,
+    });
+
+    const response = await fetch('/query-all-data?' + urlParams.toString())
+    if (!response.ok) throw new Error('Network response was not ok');
+    return await response.json();
+}
+
+async function renderChart() {
+    toggleSpinner(true);
+    var e = document.getElementById("durationSelect");
+    var value = e.value;
+    const dictionary = JSON.parse(value);
+
+    const data = await fetchChartData(dictionary["duration"], dictionary["aggregateWindow"]);
+
+    if (!metricChart) {
+        // First time: create the chart
+        const ctx = document.getElementById('metricChart').getContext('2d');
+        metricChart = createChart(ctx, data);
+    } else {
+        // Update chart data
+        updateChart(metricChart, data);
+    }
+    toggleSpinner(false);
+}
+
+const runner = new PeriodicRunner(renderChart, 5000); // 5 seconds
+runner.start();
 
 function createChart(ctx, val, decimalPlaces = 4) {
     let chart = new Chart(ctx, {
@@ -129,6 +203,12 @@ function createChart(ctx, val, decimalPlaces = 4) {
         options: {
             responsive: true,
             maintainAspectRatio: false, // Prevent the chart from resizing based on the aspect ratio of the canvas
+            plugins: {
+                decimation: {
+                    enabled: true,
+                    algorithm: 'min-max',
+                  },
+              },
             parsing: {
                 xAxisKey: 'time',
             },
@@ -163,6 +243,11 @@ function updateChart(chart, val, decimalPlaces = 4) {
     chart.update('none');
 }
 
+function toggleSpinner(show) {
+    const spinner = document.getElementById('mySpinner');
+    spinner.style.display = show ? 'inline-flex' : 'none';
+  }
+
 function setMinMaxYaxis() {
     const minValue = document.getElementById("minVal").value;  
     const maxValue = document.getElementById("maxVal").value;  
@@ -176,3 +261,48 @@ function stringToFloatOrUndefined(str) {
   const n = parseFloat(str);
   return isNaN(n) ? undefined : n;
 }
+
+document.getElementById('durationSelect').addEventListener('change', function(event) {
+    const selectedValue = event.target.value;
+    const dictionary = JSON.parse(selectedValue);
+    switch (dictionary["aggregateWindow"]) {
+        case "10s":
+          runner.setIntervalMs(5000);
+          document.getElementById("refreshInterval").innerHTML = "Refreshing every 5s ";
+          break;
+        case "20s":
+            runner.setIntervalMs(10000);
+            document.getElementById("refreshInterval").innerHTML = "Refreshing every 10s ";
+
+            break;
+        case "30s":
+            runner.setIntervalMs(15000);
+            document.getElementById("refreshInterval").innerHTML = "Refreshing every 15s ";
+
+            break;
+        case "60s":
+        case "1m":
+            runner.setIntervalMs(30000);
+            document.getElementById("refreshInterval").innerHTML = "Refreshing every 30s ";
+
+            break; 
+        case "2m":
+            runner.setIntervalMs(60000);
+            document.getElementById("refreshInterval").innerHTML = "Refreshing every 60s ";
+
+            break;                       
+        case "5m":
+            runner.setIntervalMs(150000);
+            document.getElementById("refreshInterval").innerHTML = "Refreshing every 2.5m ";
+
+            break;  
+        case "10m":
+            runner.setIntervalMs(300000);
+            document.getElementById("refreshInterval").innerHTML = "Refreshing every 5m ";
+
+            break;              
+        default:
+          // Code to execute if no case matches
+      }
+    runner.triggerNow();
+  });
