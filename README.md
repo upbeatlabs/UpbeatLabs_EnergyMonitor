@@ -44,8 +44,12 @@ pip install -r requirements.txt
 
 ## Usage
 
+```
 cd UpbeatLabs_EnergyMonitor
 venv/bin/python app.py
+```
+
+Or you can install and run it as a service (starts up automatically when the Raspberry Pi boots up)
 
 ## Running it as a service
 
