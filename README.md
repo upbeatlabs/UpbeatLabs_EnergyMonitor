@@ -17,6 +17,7 @@ The Raspberry Pi runs a python Flask based app that queries Dr. Wattson every se
 
 ![Upbeat Labs Energy Web App](UpbeatLabs_EnergyMonitor_Screenshot.png)
 ![Upbeat Labs Energy Web App](UpbeatLabs_EnergyMonitor_Screenshot2.png)
+![Upbeat Labs Energy Web App](UpbeatLabs_EnergyMonitor_Screenshot3.png)
 
 This infrastructure also enables any additional data analysis and control to be built on top of it easily. 
 
