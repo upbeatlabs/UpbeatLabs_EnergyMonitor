@@ -9,21 +9,21 @@ The ProtoStax Enclosure for Raspberry Pi 3/4/5 can be connected to the ProtoStax
 
 The finished project looks like this: 
 
-![Upbeat Labs Energy Monitor](UpbeatLabs_EnergyMonitor.png)
-![Upbeat Labs Energy Monitor](UpbeatLabs_EnergyMonitor2.png)
+![Upbeat Labs Energy Monitor](assets/UpbeatLabs_EnergyMonitor.png)
+![Upbeat Labs Energy Monitor](assets/UpbeatLabs_EnergyMonitor2.png)
 
 
 The Raspberry Pi runs a python Flask based app that queries Dr. Wattson every second and uploads the data to an InfluxDB instance. The python Flask app also presents a client user interface using HTML, CSS and Javascript to display the current energy metrics in a dashboard. You can also view historical data - last 5 mins, 10 mins, 30 mins, 60 mins, 3h, 6h, 12h and 24h. 
 
-![Upbeat Labs Energy Web App](UpbeatLabs_EnergyMonitor_Screenshot.png)
-![Upbeat Labs Energy Web App](UpbeatLabs_EnergyMonitor_Screenshot2.png)
-![Upbeat Labs Energy Web App](UpbeatLabs_EnergyMonitor_Screenshot3.png)
+![Upbeat Labs Energy Web App](assets/UpbeatLabs_EnergyMonitor_Screenshot.png)
+![Upbeat Labs Energy Web App](assets/UpbeatLabs_EnergyMonitor_Screenshot2.png)
+![Upbeat Labs Energy Web App](assets/UpbeatLabs_EnergyMonitor_Screenshot3.png)
 
 This infrastructure also enables any additional data analysis and control to be built on top of it easily. 
 
 Here is the architecture diagram. 
 
-![Upbeat Labs Energy Monitor Architecture Diagram](UpbeatLabs_EnergyMonitor_Architecture.png)
+![Upbeat Labs Energy Monitor Architecture Diagram](assets/UpbeatLabs_EnergyMonitor_Architecture.png)
 
 
 ## Prerequisites
