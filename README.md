@@ -18,7 +18,7 @@ This infrastructure also enables any additional data analysis and control to be 
 
 Here is the architecture diagram. 
 
-![Upbeat Labs Energy Monitor Architecture Diagram](UpbeatLabs_EnergyMonitor_Architecture.jpg)
+![Upbeat Labs Energy Monitor Architecture Diagram](UpbeatLabs_EnergyMonitor_Architecture.png)
 
 
 ## Prerequisites
