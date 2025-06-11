@@ -1,5 +1,4 @@
-# UpbeatLabs_EnergyMonitor
-Upbeat Labs EnergyMonitor
+# UpbeatLabs EnergyMonitor
 
 The Upbeat Labs Energy Monitor is an energy monitoring and analysis device. It measures the AC energy parameters of any connected device, like RMS Voltage, Current, Line Frequency, Power Factor, Active/Reactive/Apparent Power etc, logs it to a time-series database, and also exposes the current metrics and historical data charts via a web-app. 
 
@@ -12,14 +11,37 @@ The finished project looks like this:
 ![Upbeat Labs Energy Monitor](assets/UpbeatLabs_EnergyMonitor.png)
 ![Upbeat Labs Energy Monitor](assets/UpbeatLabs_EnergyMonitor2.png)
 
-
 The Raspberry Pi runs a python Flask based app that queries Dr. Wattson every second and uploads the data to an InfluxDB instance. The python Flask app also presents a client user interface using HTML, CSS and Javascript to display the current energy metrics in a dashboard. You can also view historical data - last 5 mins, 10 mins, 30 mins, 60 mins, 3h, 6h, 12h and 24h. 
+
+You can view AC energy consumption parameters such as: 
+* Voltage (RMS)
+* Current (RMS)
+* Line Frequency
+* Power Factor
+* Active Power 
+* Reactive Power
+* Apparent Power
+* Which Power Quadrant it is in (Consume, Inductive/Generate, Inductive/Generate, Capacitive/Consume, Capacitive)
+
+You can also view which events have occured 
+* Over Current 
+* Over Power
+* Voltage Surge
+* Voltage Sag
+
+*You can set the various limits for the different event conditions*
+
+You can also view the energy consumed/generated for the day:
+* Active Energy Import
+* Active Energy Export
+* Reactive Energy Import
+* Reactive Energy Export
 
 ![Upbeat Labs Energy Web App](assets/UpbeatLabs_EnergyMonitor_Screenshot.png)
 ![Upbeat Labs Energy Web App](assets/UpbeatLabs_EnergyMonitor_Screenshot2.png)
 ![Upbeat Labs Energy Web App](assets/UpbeatLabs_EnergyMonitor_Screenshot3.png)
 
-This infrastructure also enables any additional data analysis and control to be built on top of it easily. 
+This infrastructure also enables any additional data analysis and control to be built on top of it easily. You can use the web app as-is to get a lot of useful information, both current and historic data (upto 24 hours) without any additional coding. Since historic data is stored in a time series database, you can also query it, visualize it (using tools such as Grafana which goes together very well with InfluxDB), and analyze it with additional coding and data analytics. 
 
 Here is the architecture diagram. 
 
