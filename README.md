@@ -50,12 +50,14 @@ Here is the architecture diagram.
 
 ## Prerequisites
 
-[Dr. Wattson Energy Monitoring Board V2](https://www.protostax.com/products/dr-wattson-energy-monitoring-board-v2)
-[ProtoStax Enclosure for Dr. Wattson Energy Monitor](https://www.protostax.com/products/protostax-enclosure-for-dr-wattson-energy-monitor)
-Raspberry Pi (using a Raspberry Pi 4B here) running bookworm
-[ProtoStax Enclosure for Raspberry Pi 5 / 4 / 3 Model B/B+](https://www.protostax.com/products/protostax-for-raspberry-pi-b)
-[ProtoStax Horizontal Stacking Kit](https://www.protostax.com/products/protostax-horizontal-stacking-kit)
-OLED screen
+* [Dr. Wattson Energy Monitoring Board V2](https://www.protostax.com/products/dr-wattson-energy-monitoring-board-v2)
+* [ProtoStax Enclosure for Dr. Wattson Energy Monitor](https://www.protostax.com/products/protostax-enclosure-for-dr-wattson-energy-monitor)
+* Raspberry Pi (using a Raspberry Pi 4B here) running bookworm
+* [ProtoStax Enclosure for Raspberry Pi 5 / 4 / 3 Model B/B+](https://www.protostax.com/products/protostax-for-raspberry-pi-b)
+* [ProtoStax Horizontal Stacking Kit](https://www.protostax.com/products/protostax-horizontal-stacking-kit)
+* OLED Display screen (optional) - the screen has connectors to the Dr. Wattson board. If you're not using this, you can hook up Dr. Wattson directly to your Raspberry Pi following the instructions from Dr. Wattson. 
+
+Follow the instructions from ProtoStax and Dr. Wattson for putting the circuitry together and assembling the enclosures. 
 
 InfluxDB2 database installed and running
 
@@ -69,7 +71,21 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
+You should also create a config.ini here to contain the credentials for connecting to your InfluxDB instance. A sample config_sample.ini has been provided. 
+
+```
+[APP]
+ID = <NAME_OF_DEVICE> 
+INFLUX_URL = <URL_FOR_INFLUX_DB> 
+INFLUX_TOKEN = <INFLUXDB_TOKEN> 
+INFLUX_ORG = <INFLUXDB_ORGANIZATION_NAME> 
+INFLUX_BUCKET = <NAME_OF_BUCKET>
+INFLUX_BUCKET_AUTH = <NAME_OF_AUTH_BUCKET> 
+```
+
 ## Usage
+
+If everything has been installed (including InfluxDB) and works, you should be able to run the following without errors:
 
 ```
 cd UpbeatLabs_EnergyMonitor
