@@ -11,6 +11,8 @@ The finished project looks like this:
 ![Upbeat Labs Energy Monitor](assets/UpbeatLabs_EnergyMonitor.png)
 ![Upbeat Labs Energy Monitor](assets/UpbeatLabs_EnergyMonitor2.png)
 
+View it in action on the YouTube video below! Click on the image below to watch the video. 
+
 [![Energy Monitoring & Analysis Device with Integrated Web App](http://img.youtube.com/vi/jkg7AAGCIm4/0.jpg)](http://www.youtube.com/watch?v=jkg7AAGCIm4 "Energy Monitoring & Analysis Device with Integrated Web App")
 
 The Raspberry Pi runs a python Flask based app that queries Dr. Wattson every second and uploads the data to an InfluxDB instance. The python Flask app also presents a client user interface using HTML, CSS and Javascript to display the current energy metrics in a dashboard. You can also view historical data - last 5 mins, 10 mins, 30 mins, 60 mins, 3h, 6h, 12h and 24h. 
